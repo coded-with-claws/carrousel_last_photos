@@ -17,7 +17,7 @@ sudo apt install fbi imagemagick*
 > yes, the character '*' is important
 
 # Install
-- Copy the files on a Raspberry Pi OS as user `pi` in the home (`/home/pi/`)
+- Copy the files on a Raspberry Pi OS as user `pi` in the home (`/home/pi/`) and make them executable
 - Add cron tasks to automatically run the show after the boot
 ```console
 crontab -e
