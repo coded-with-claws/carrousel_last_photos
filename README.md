@@ -10,7 +10,9 @@ It's useful for a folder where new photos are uploaded frequently.
 The display is done with the tool `fbi`, which you must install on the system.
 
 # Pre-requisites
+```console
 sudo apt install fbi imagemagick*
+```
 
 > yes, the character '*' is important
 
