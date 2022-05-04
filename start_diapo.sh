@@ -50,7 +50,7 @@ while [ ! -f $TOOL_DIR/STOP ]; do
     BANK_USED=$DIR_BANK1
   fi
   rm -f ${BANK_USED}/*
-  find $PHOTO_DIR -type f -printf "%C@ %p\n" | sort -n | cut -f2- -d" " | tail -$NB_PHOTO_DIAPO | tr '\n' '\0' | 
+  find $PHOTO_DIR -maxdepth 1 -type f -printf "%C@ %p\n" | sort -n | cut -f2- -d" " | tail -$NB_PHOTO_DIAPO | tr '\n' '\0' | 
     while IFS= read -r -d '' file; do 
         echo "$file"
         ln -s "$file" ${BANK_USED}/
