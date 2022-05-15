@@ -32,7 +32,7 @@ find $PHOTO_DIR -type f -printf "%C@ %p\n" | sort -n | cut -f2- -d" " | tail -$N
 while [ ! -f $TOOL_DIR/STOP ]; do 
 
   # lancer fbi (automatiquement en background)
-  sudo fbi -noverbose -T 1 -a -t $DUREE_PHOTO --once --readahead $BANK_USED/*
+  sudo fbi -noverbose -T 1 -a -t $DUREE_PHOTO --once --readahead $BANK_USED/* >/dev/null 2>&1
   PID_FBI=$(pgrep fbi)
   echo "[+] fbi démarré (PID $PID_FBI) sur la banque $BANK_USED" &>>$LOG_FILE
   
