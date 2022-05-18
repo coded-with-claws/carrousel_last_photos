@@ -21,9 +21,9 @@ function main() {
   mkdir $DIR_SYMLINK
 
   # Symlink vers les deux premieres photos (qui sont mises en cache par fbi donc non modifiables)
-  echo "[*] init - linker les deux premieres photos fixes $PHOTO1 et $PHOTO2 dans le repertoire DIR_SYMLINK" &>>$LOG_FILE
-  ln -sf $PHOTO_DIR/$PHOTO1 ${DIR_SYMLINK}/link_001
-  ln -sf $PHOTO_DIR/$PHOTO2 ${DIR_SYMLINK}/link_002
+  #echo "[*] init - linker les deux premieres photos fixes $PHOTO1 et $PHOTO2 dans le repertoire DIR_SYMLINK" &>>$LOG_FILE
+  #ln -sf $PHOTO_DIR/$PHOTO1 ${DIR_SYMLINK}/link_001
+  #ln -sf $PHOTO_DIR/$PHOTO2 ${DIR_SYMLINK}/link_002
 
   # Preparer les liens symboliques pour les 30 dernieres photos (30 x 10s = 5min)
   echo "[*] init - linker les photos dans le repertoire $DIR_SYMLINK" &>>$LOG_FILE
