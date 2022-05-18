@@ -39,7 +39,7 @@ function main() {
   while [ ! -f $TOOL_DIR/STOP ]; do 
     
     # attendre jusqu'à ce qu'il ne reste que 30 sec avant la fin du diaporama
-    # puis récupérer les 30 dernières photos (30 x 10s = 5min) (qui seront affichése a la prochaine itération)
+    # puis recuperer les 30 dernières photos (30 x 10s = 5min) (qui seront affichees a la prochaine iteration)
     NB_FIC=`find $DIR_SYMLINK -type l |wc -l`
     DUREE_TEMPO=$(($NB_FIC * $DUREE_PHOTO - 30))
     echo "[*] attendre $DUREE_TEMPO sec" &>>$LOG_FILE
