@@ -27,7 +27,8 @@ crontab -e
 ```
 - Note: you can diverge from that setup if you edit diapo.conf and/or the scripts accordingly
 
-# Use
-- Inside diapo.conf, PHOTO1 and PHOTO2 will be displayed as first photos everytime (fbi will cache them although we use -cachemem 0)
-- You must already have NB_PHOTO_DIAPO available inside PHOTO_DIR (in order to create every symbolic links for fbi loop)
+# Configure
+- Inside diapo.conf
+- PHOTO1 and PHOTO2 will be displayed as first photos in every loop (because fbi will cache them although we use -cachemem 0)
+- You must already have NB_PHOTO_DIAPO available inside PHOTO_DIR (in order to create every symbolic links for fbi loop). Additional symlinks won't be created.
 
