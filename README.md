@@ -3,9 +3,10 @@ Carrousel displaying most recent photos on Linux Framebuffer with tool `fbi`.
 
 These are GNU/Linux shell scripts written to display a carrousel of photos on a Raspberry Pi running on Raspberry Pi OS Lite (only console, no GUI).
 
-The idea is to display the most recent photos (up to a given number of photos) of a folder are displayed, then check again which are the most recent photos to display, etc.
-
+The idea is to display the most recent photos (up to a given number of photos) of a folder, then check again which are the most recent photos to display, etc.
 It's useful for a folder where new photos are uploaded frequently.
+
+The default configuration is to display the 30 most recent photos, with 10 seconds for each photos (making a loop of 5 minutes).
 
 The display is done with the tool `fbi`, which you must install on the system.
 
