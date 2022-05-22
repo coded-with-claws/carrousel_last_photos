@@ -83,11 +83,13 @@ function make_links() {
 
 function clean_old_photos() {
     find $DIR_WORK -type f -mmin +$DELAI_CLEAN -print0 | xargs -0 -n 1 basename 2>/dev/null | sort >/tmp/files_work 
-    readlink $DIR_FBI/* | xargs -n 1 basename | sort >/tmp/files_fbi
-    pushd . &>/dev/null
-    cd $DIR_WORK
-    comm -2 -3 /tmp/files_work /tmp/files_fbi | xargs rm -f
-    popd &>/dev/null
+    if [ -s /tmp/files_work ]; then
+        readlink -z $DIR_FBI/* | xargs -0 -n 1 basename | sort >/tmp/files_fbi
+        pushd . &>/dev/null
+        cd $DIR_WORK
+        comm -2 -3 /tmp/files_work /tmp/files_fbi | xargs -I {} rm -f "{}"
+        popd &>/dev/null
+    fi
 }
 
 function run_fbi() {
@@ -95,7 +97,7 @@ function run_fbi() {
 }
 
 function watchdog() {
-    if ! pgrep fbi >/dev/null; then
+    if ! pgrep fbi &>/dev/null; then
 	echo "[*] fbi no longer running, restarting" &>>$LOG_FILE
 	run_fbi
     fi
