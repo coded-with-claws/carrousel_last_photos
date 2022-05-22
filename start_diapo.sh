@@ -45,40 +45,41 @@ function main() {
   
     # Main loop
     while [ ! -f $TOOL_DIR/STOP ]; do 
-  
-        # attendre jusqu'à ce qu'il ne reste que 30 sec avant la fin du diaporama
-        # puis recuperer les 30 dernières photos (30 x 10s = 5min) (qui seront affichees a la prochaine iteration)
+	# wait a while before the end of the current fbi loop then make links for new photos (for the next fbi loop)
         echo "[*] wait $DUREE_TEMPO sec" &>>$LOG_FILE
         sleep $DUREE_TEMPO &>/dev/null
         echo "[+] end of wait" &>>$LOG_FILE
-        make_links
-        echo "[+] photos linked into directory $DIR_FBI" &>>$LOG_FILE
-  
-        # clean the photos not used in the next loop of fbi display, and being too old (i.e. not being displayed in current loop)
-        clean_old_photos
-        echo "[+] cleaned directory $DIR_WORK" &>>$LOG_FILE
-  
+	# refresh the photo list (run it in background to keep sync'd with the fbi loop)
+	# nevermind if it's not finished when fbi starts next loop, because it will start by reading the first links which are already up-to-date
+        make_links clean &
         watchdog
-  
     done
   
     rm $TOOL_DIR/diapo_mutex
 
 }
 
+# arg1 : if set, clean must be done
 function make_links() {
+    clean=$1
     symlink_i=1
     find $PHOTO_DIR -maxdepth 1 -type f -printf "%C@ %p\n" | sort -n | cut -f2- -d" " | tail -$NB_PHOTO_DIAPO | tr '\n' '\0' | 
-	while IFS= read -r -d '' file; do 
-	    i=`printf "%03d" $symlink_i`
-	    copy=`basename "$file"`
-	    #echo "link_$i" 
-	    if [ ! -f ${DIR_WORK}/"$copy" ];  then
-		convert "$file" -resize $RESO_PHOTO -background black -compose Copy -gravity center -extent $RESO_PHOTO ${DIR_WORK}/"$copy"
-	    fi
-	    ln -sf ${DIR_WORK}/"$copy" ${DIR_FBI}/"link_$i"
-	    symlink_i=$(($symlink_i + 1))
-	done
+    while IFS= read -r -d '' file; do 
+	i=`printf "%03d" $symlink_i`
+	copy=`basename "$file"`
+	#echo "link_$i" 
+	if [ ! -f ${DIR_WORK}/"$copy" ];  then
+	    convert "$file" -resize $RESO_PHOTO -background black -compose Copy -gravity center -extent $RESO_PHOTO ${DIR_WORK}/"$copy"
+	fi
+	ln -sf ${DIR_WORK}/"$copy" ${DIR_FBI}/"link_$i"
+	symlink_i=$(($symlink_i + 1))
+    done
+    echo "[+] photos linked into directory $DIR_FBI" &>>$LOG_FILE
+
+    # clean the photos not used in the next loop of fbi display, and being too old (i.e. not being displayed in current loop)
+    if [ ! -z $clean ]; then
+	clean_old_photos
+    fi
     }
 
 function clean_old_photos() {
@@ -90,6 +91,7 @@ function clean_old_photos() {
         comm -2 -3 /tmp/files_work /tmp/files_fbi | xargs -I {} rm -f "{}"
         popd &>/dev/null
     fi
+    echo "[+] cleaned directory $DIR_WORK" &>>$LOG_FILE
 }
 
 function run_fbi() {
