@@ -33,3 +33,8 @@ crontab -e
 - PHOTO1 and PHOTO2 will be displayed as first photos in every loop (because fbi will cache them although we use -cachemem 0)
 - You must already have NB_PHOTO_DIAPO available inside PHOTO_DIR (in order to create every symbolic links for fbi loop). Additional symlinks won't be created.
 
+# Technical notes
+This script may seem overengineered. Questions you may ask are :
+- Why not use fbi with -once argument ? It was the first version of the script. After every batch of photos, we get back to Linux console for a bit, so it's not smooth and pretty.
+- Why resizing the photos ? When we use fbi with "-autozoom" and "-cachemem 0", and change the photos (keeping the same filenames), fbi doesn't recalculate the autozoom for the new photo (will it ever be fixed ?)
+

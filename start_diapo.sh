@@ -80,15 +80,14 @@ function make_links() {
      #echo "link_$i" 
      if [ ! -f ${DIR_WORK}/"$copy" ];  then
        convert "$file" -resize $RESO_PHOTO -background black -compose Copy -gravity center -extent $RESO_PHOTO ${DIR_WORK}/"$copy"
-       ln -sf ${DIR_WORK}/"$copy" ${DIR_FBI}/"link_$i"
      fi
+     ln -sf ${DIR_WORK}/"$copy" ${DIR_FBI}/"link_$i"
      symlink_i=$(($symlink_i + 1))
     done
 }
 
 function clean_old_photos() {
-  #ls -1 $DIR_WORK | sort >/tmp/files_work
-  find $DIR_WORK -type f -mmin +$DELAI_CLEAN | xargs -n 1 basename 2>/dev/null | sort >/tmp/files_work 
+  find $DIR_WORK -type f -mmin +$DELAI_CLEAN -print0 | xargs -0 -n 1 basename 2>/dev/null | sort >/tmp/files_work 
   readlink $DIR_FBI/* | xargs -n 1 basename | sort >/tmp/files_fbi
   pushd . &>/dev/null
   cd $DIR_WORK
