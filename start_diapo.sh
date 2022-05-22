@@ -27,8 +27,7 @@ function main() {
   
     NB_FIC=`find $DIR_FBI -type l |wc -l`
     # The refresh of photos will be done 10 seconds before the end of the current loop
-    #DUREE_TEMPO=$(($NB_FIC * $DUREE_PHOTO - $NB_PHOTO_DIAPO))
-    DUREE_TEMPO=$(($NB_FIC * $DUREE_PHOTO - 10))
+    DUREE_TEMPO=$(($NB_FIC * $DUREE_PHOTO))
     if [ $DUREE_TEMPO -lt 1 ]; then
         DUREE_TEMPO=$(($NB_FIC - 1))
     fi
@@ -48,9 +47,10 @@ function main() {
 	# wait a while before the end of the current fbi loop then make links for new photos (for the next fbi loop)
         echo "[*] wait $DUREE_TEMPO sec" &>>$LOG_FILE
         sleep $DUREE_TEMPO &>/dev/null
-        echo "[+] end of wait" &>>$LOG_FILE
+        echo "[+] wait $DUREE_TEMPO sec [DONE]" &>>$LOG_FILE
 	# refresh the photo list (run it in background to keep sync'd with the fbi loop)
 	# nevermind if it's not finished when fbi starts next loop, because it will start by reading the first links which are already up-to-date
+        echo "[*] linking photos into directory $DIR_FBI" &>>$LOG_FILE
         make_links clean &
         watchdog
     done
@@ -74,7 +74,7 @@ function make_links() {
 	ln -sf ${DIR_WORK}/"$copy" ${DIR_FBI}/"link_$i"
 	symlink_i=$(($symlink_i + 1))
     done
-    echo "[+] photos linked into directory $DIR_FBI" &>>$LOG_FILE
+    echo "[+] linking photos into directory $DIR_FBI [DONE]" &>>$LOG_FILE
 
     # clean the photos not used in the next loop of fbi display, and being too old (i.e. not being displayed in current loop)
     if [ ! -z $clean ]; then
