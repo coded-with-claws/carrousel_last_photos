@@ -95,7 +95,7 @@ function clean_old_photos() {
 }
 
 function run_fbi() {
-    sudo fbi -noverbose -T 1 -a -t $DUREE_PHOTO -cachemem 0 -blend 500 -nocomments $DIR_FBI/* >/dev/null 2>&1
+    sudo fbi -noverbose -T 1 -a -t $DUREE_PHOTO -cachemem 0 -nocomments $DIR_FBI/* >/dev/null 2>&1
 }
 
 function watchdog() {
