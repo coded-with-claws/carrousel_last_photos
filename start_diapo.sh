@@ -63,7 +63,7 @@ function main() {
 function make_links() {
     clean=$1
     symlink_i=1
-    find $PHOTO_DIR -maxdepth 1 -type f -printf "%C@ %p\n" | sort -n | cut -f2- -d" " | tail -$NB_PHOTO_DIAPO | tr '\n' '\0' | 
+    find $PHOTO_DIR -maxdepth 1 -type f -printf "%C@ %p\n" | egrep -i "*.jpg|*.jpeg|*.bmp|*.png|*.gif" | sort -n | cut -f2- -d" " | tail -$NB_PHOTO_DIAPO | tr '\n' '\0' | 
     while IFS= read -r -d '' file; do 
 	i=`printf "%03d" $symlink_i`
 	copy=`basename "$file"`
