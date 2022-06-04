@@ -69,7 +69,7 @@ function make_links() {
 	copy=`basename "$file"`
 	#echo "link_$i" 
 	if [ ! -f ${DIR_WORK}/"$copy" ];  then
-	    convert "$file" -resize $RESO_PHOTO -background black -compose Copy -gravity center -extent $RESO_PHOTO ${DIR_WORK}/"$copy"
+	    convert "$file" -resize $RESO_PHOTO -background black -compose Copy -gravity center -extent $RESO_PHOTO -auto-orient ${DIR_WORK}/"$copy"
 	fi
 	ln -sf ${DIR_WORK}/"$copy" ${DIR_FBI}/"link_$i"
 	symlink_i=$(($symlink_i + 1))
