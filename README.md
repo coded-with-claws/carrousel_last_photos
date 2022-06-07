@@ -36,6 +36,6 @@ crontab -e
 
 # Technical notes
 This script may seem overengineered. Questions you may ask are :
-- Why not use fbi with -once argument ? It was the first version of the script. After every batch of photos, we get back to Linux console for a bit, so it's not smooth and pretty.
+- Why not use fbi with -once argument ? It was the first version of the script (archived into branch "run_once"). After every batch of photos, we get back to Linux console for a bit, so it's not smooth and pretty.
 - Why resizing the photos ? When we use fbi with "-autozoom" and "-cachemem 0", and change the photos (keeping the same filenames), fbi doesn't recalculate the autozoom for the new photo (will it ever be fixed ?)
 
