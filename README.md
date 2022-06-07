@@ -10,7 +10,7 @@ The default configuration is to display the 30 most recent photos, with 10 secon
 
 The display is done with the tool `fbi`, which you must install on the system.
 
-Caveat: fbi runs longer than the number of photos multiplied by the duration per photo. Hence, the script will desync with the fbi loops, along the time... This means that some photos could not be displayed because they were linked in the end of the loop and the refresh of the links is done before, and overwrites the link.
+**Caveat:** fbi runs longer than the number of photos multiplied by the duration per photo. Hence, the script will desync with the fbi loops, along the time... This means that some photos could not be displayed because they were linked in the end of the loop and the refresh of the links is done before, and overwrites the link.
 
 # Pre-requisites
 ```console
